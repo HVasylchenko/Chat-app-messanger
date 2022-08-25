@@ -120,7 +120,7 @@ const Login = () => {
           {loading ? <button className="btn" >Logging in ... </button>
           : <div>
             <button onClick={loginGoogle} className="btn" disabled={loading}> with Google </button>
-            <button onClick={loginFacebook} className="btn" disabled={loading}> with Facebook </button>
+            {/* <button onClick={loginFacebook} className="btn" disabled={loading}> with Facebook </button> */}
             <button onClick={loginGithub} className="btn" disabled={loading}> with Github </button>
             </div>
           }
