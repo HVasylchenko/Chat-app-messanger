@@ -5,9 +5,8 @@ import { db } from "../firebase";
 const User = ({ user1, user, selectUser, chat }) => {
   const user2 = user?.uid;
   const [data, setData] = useState("");
-console.log("Userpage");
+
   useEffect(() => {
-    console.log("useEffectUserpage");
     const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`;
     let unsub = onSnapshot(doc(db, "lastMsg", id), (doc) => {
       setData(doc.data());

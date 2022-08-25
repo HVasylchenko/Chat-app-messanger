@@ -3,10 +3,12 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  GithubAuthProvider
 } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useHistory } from "react-router-dom";
 import { setDoc, doc, Timestamp } from "firebase/firestore";
+
 
 const Login = () => {
   const [data, setData] = useState({
@@ -19,6 +21,7 @@ const Login = () => {
 
   const providerGoogle = new GoogleAuthProvider();
   const providerFacebook = new FacebookAuthProvider();
+  const providerGithub = new GithubAuthProvider();
 
   const history = useHistory();
 
@@ -80,6 +83,36 @@ const Login = () => {
     }
   };
 
+  const loginGithub = async () => {
+    setData({ ...data, error: null, loading: true });
+    let user = {};
+    try {
+      await signInWithPopup(auth, providerGithub).then((result) => {
+      // await signInWithRedirect(auth, providerGithub).then((result) => {
+        user = result.user;
+        // console.log("userGithub", user);
+      });
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        avatar: user.photoURL,
+        createdAt: Timestamp.fromDate(new Date()),
+        isOnline: true,
+      });
+      setData({
+        email: "",
+        password: "",
+        error: null,
+        loading: false,
+      });
+      history.replace("/");
+    } catch (err) {
+      console.log(err);
+      setData({ ...data, error: err.message, loading: false });
+    }
+  };
+
   return (
     <section>
       <h3>Log into your Account</h3>
@@ -88,6 +121,7 @@ const Login = () => {
           : <div>
             <button onClick={loginGoogle} className="btn" disabled={loading}> with Google </button>
             <button onClick={loginFacebook} className="btn" disabled={loading}> with Facebook </button>
+            <button onClick={loginGithub} className="btn" disabled={loading}> with Github </button>
             </div>
           }
       </div>

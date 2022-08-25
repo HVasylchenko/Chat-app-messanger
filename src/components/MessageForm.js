@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 
-const MessageForm = ({ handleSubmit, text, setText, setImg }) => {
+const MessageForm = ({ handleSubmit, text, setText}) => {
   const chucknorrisJoke = async () => {
     await fetch("https://api.chucknorris.io/jokes/random")
       .then((result) => {

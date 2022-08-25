@@ -9,7 +9,7 @@ const Message = ({ msg, user1 }) => {
     // scrollRef.current?.scrollIntoView({ behavior: 'smooth', inline: 'end' });
   }, [msg]);
 
-  // console.log ("msg", msg)
+ 
   return (
     <div
       className={`message_wrapper ${msg.from === user1 ? "own" : ""}`}
@@ -20,9 +20,7 @@ const Message = ({ msg, user1 }) => {
         {msg.text}
         <br />
         <small>
-          {/* {msg.createdAt.toDate()} */}
           <Moment format="YYYY-MM-DD HH:mm">{msg.createdAt.toDate()}</Moment>
-          {/* <Moment fromNow>{msg.createdAt.toDate()}</Moment> */}
         </small>
 
       </p>
